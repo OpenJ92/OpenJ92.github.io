@@ -54,8 +54,17 @@ with the standard notation for scalars, vectors and matrices.
 
 A convolution operator denoted $C\_{m}$ is a motion from an array of one dimensionality to another $\theta_{\Pi a} \rightarrow \theta_{\Pi b}$. 
 For our purpose, the operation will reduce the dimensionality of the array along the specified index $C_{\phi} \theta_{\phi \Pi a} = \theta_{\Pi a}$.
+A composition of convolutions $C_{m} \circ C_{n}$ will be denoted by $C_{mn}$
 
 #### Construction
+
+Firstly, we'll define a function $\beta$ which accepts a multidimensional array $\theta_{\Pi b_{k}}$, a vector of dimensions $b_{i}$ and a vector from 
+the domain $v_{i}$. 
+
+$$ 
+\tag{1.1}
+\beta (\theta_{\Pi b_{k}}, b_{i}, v_{i}) = C_{\Pi b_{i}} \theta_{\Pi b_{k}} (v_{i}) = \theta_{\frac{\Pi b_{k}}{\Pi b_{i}}}
+$$
 
 #### Implementation (Python)
 ```python
