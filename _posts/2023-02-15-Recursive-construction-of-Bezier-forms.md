@@ -41,6 +41,9 @@ An incomplete sequence of integers will corespond to what's known as a slice. Th
 we will resolve a (3-1)-dimensional container with free variables $b$ and $c$. In our example, there would be two such slices in
 the item, $\theta^{0..}\_{.bc}$ and $\theta^{1..}\_{.bc}$.
 
+Scalar multiplication and addition between identically size arrays are needed for this construction. Much like vector and matrix algebra, 
+it will be defined as a broadcast multiplication and componentwise addition. 
+
 - **Lambda Functions**
 
 These 'on the fly' functions will appear throughout the construction as we combine slices of multi-dimensional arrays together
@@ -48,6 +51,80 @@ into their new form. They will appear as $\lambda \theta\_i \theta\_{j, k}: \lam
 with the standard notation for scalars, vectors and matrices. 
 
 - **Convolution Operator**
-	* $C\_{m} \theta\_{lmn} \rightarrow \theta\_{ln}$
+
+A convolution operator denoted $C\_{m}$ is a motion from an array of one dimensionality to another $\theta_{\Pi a} \rightarrow \theta_{\Pi b}$. 
+For our purpose, the operation will reduce the dimensionality of the array along the specified index $C_{\phi} \theta_{\phi \Pi a} = \theta_{\Pi a}$.
 
 #### Construction
+
+#### Implementation (Python)
+```python
+from src.typeclass.VFF import VFF
+
+from numpy import array, concatenate, stack
+
+class Bezier(VFF):
+    def __init__(self
+                , shape_in: array
+                , shape_out: array
+                , control_points: array
+                , callparam=lambda t:t
+                ):
+        self.shape_in = shape_in
+        self.shape_out = shape_out
+        self.control_points = control_points
+
+    @classmethod
+    def make_closed(self
+                   , _spine: array
+                   , _loop: array
+                   , _control_points: array
+                   ):
+        pass
+
+    @classmethod
+    def make_random(self):
+        pass
+
+    @classmethod
+    def make_random_closed(self):
+        pass
+
+    def __call__(self, t):
+        return self.evaluate(t)
+
+    def evaluate(self, t):
+        t = self.callparam(t)
+        convolve = lambda t, c1, c2: (1-t)*c1 + t*c2
+        a = [
+                self.shape_in.reshape(self.control_points.shape[0],1),
+                self.control_points,
+                self.shape_out.reshape(self.control_points.shape[0],1)
+            ]
+        temp_control = concatenate(a, axis=1)
+        while temp_control.shape[1] > 1:
+            A = [
+                    convolve(t, temp_control[:, i], temp_control[:, i+1])
+                    for i
+                    in range(temp_control.shape[1] - 1)
+                ]
+            temp_control = stack(A, axis = 1)
+        return tuple(temp_control.T.reshape(self.control_points.shape[0]))
+
+    def _evaluate(self, t, arr):
+        pass
+
+    def split(self, t):
+        return [ Bezier( self.shape_in
+                       , self.shape_out
+                       , self.control_points
+                       , callparam=lambda nt: t*nt
+                       )
+               , Bezier( self.shape_in
+                       , self.shape_out
+                       , self.control_points
+                       , callparam=lambda nt: (1-t)*nt+t
+                       )
+               ]
+```
+
