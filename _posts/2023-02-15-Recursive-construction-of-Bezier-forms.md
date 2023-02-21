@@ -88,14 +88,14 @@ A map of this function over the given dimension will procude a new array that's 
 
 $$
 \tag{1.4}
-\lambda_i t \triangleright \theta
+\lambda_i t \triangleright \theta^{.i.}_{...}
 $$
 
 We wish to repeat this map until one component remains. Which indeed resolves to our desired convolutional operator. 
 
 $$
 \tag{2.0}
-\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta = \lambda_i t \overset{\|i\|}{\triangleright} \theta = C_{i}
+\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta^{.i.}_{...} = \lambda_i t \overset{\|i\|}{\triangleright} \theta^{.i.}_{...} = C_{i} \theta^{.i.}_{...}
 $$
 
 
