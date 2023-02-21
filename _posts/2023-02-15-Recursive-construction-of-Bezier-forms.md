@@ -64,12 +64,40 @@ the domain $v\_{i}$.
 $$ 
 \tag{1.1}
 \beta (\theta_{\Pi b_{k}}, b_{i}, v_{i}) = C_{\Pi b_{i}} \theta_{\Pi b_{k}} (v_{i})
+\label{eq:1p1}
 $$
 
 $$
 \tag{1.2}
 \beta (\theta_{\Pi b_{k}}, b_{i}, v_{i}) = \theta_{\frac{\Pi b_{k}}{\Pi b_{i}}} (v_{i})
+\label{eq:1p2}
 $$
+
+A motion from $\eqref{eq:1p1}$ to $\eqref{eq:1p2}$ come through repeatedly consuming a convolutional operator and vector component on either side of our
+multidimensional array. Their combination reduces the dimension of the array as mentioned above. The process continues until all components are consumed.
+
+We now define the implementation of our operator $C\_{b\_i}$. It itself is a composition of operations over the array. Firstly, we'll define $\lambda_i$ 
+which combines adjacent slices of $\theta$ into a singular slice. 
+
+$$
+\tag{1.3}
+ \lambda_i t \theta_{i} \theta_{i+1} : (1 - t)\theta_{i} + t\theta_{i+1}
+$$
+
+A map of this function over the given dimension will procude a new array that's been reduced by 1 in the given dimension. 
+
+$$
+\tag{1.4}
+\lambda_i t \triangleright \theta
+$$
+
+We wish to repeat this map until one component remains. Which indeed resolves to our desired convolutional operator. 
+
+$$
+\tag{2.0}
+\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta = \lambda_i t \overset{\|i\|}{\triangleright} \theta = C_{i}
+$$
+
 
 #### Implementation (Python)
 ```python
