@@ -95,7 +95,7 @@ We wish to repeat this map until one component remains. Which indeed resolves to
 
 $$
 \tag{2.0}
-\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta^{.i.}_{...} = \lambda_i t \overset{\|i\|}{\triangleright} \theta^{.i.}_{...} = C_{i} \theta^{.i.}_{...}
+\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta^{.i.}_{...} = \lambda_i t \overset{\|i\|}{\triangleright} \theta^{.i.}_{...} = C_{i} \theta^{.i.}_{...} = \theta^{..}_{..}
 $$
 
 
@@ -103,70 +103,37 @@ $$
 ```python
 from src.typeclass.VFF import VFF
 
-from numpy import array, concatenate, stack
+from numpy import array, array_split, squeeze
 
 class Bezier(VFF):
-    def __init__(self
-                , shape_in: array
-                , shape_out: array
-                , control_points: array
-                , callparam=lambda t:t
-                ):
-        self.shape_in = shape_in
-        self.shape_out = shape_out
+    def __init__(self, control_points, collapse_axes, callparam=lambda t:t):
         self.control_points = control_points
+        self.collapse_axes = collapse_axes
+        self.callparam = callparam
 
-    @classmethod
-    def make_closed(self
-                   , _spine: array
-                   , _loop: array
-                   , _control_points: array
-                   ):
-        pass
+    def __call__(self, ts):
+        ## Extract domain value and axis indicator.
+        t, *ts = ts
+        m, *ms = self.collapse_axes
 
-    @classmethod
-    def make_random(self):
-        pass
+        ## Along the given axis, gather sub-arrays from control points
+        scp = array_split(self.control_points, self.control_points.shape[m], m)
 
-    @classmethod
-    def make_random_closed(self):
-        pass
+        ## condense sub-arrays with convolution 
+        while len(scp) > 1: scp = [self.convolve(t,p,c) for p, c in zip(scp, scp[1:])]
 
-    def __call__(self, t):
-        return self.evaluate(t)
+        ## collect result of above computation and remove the condensed axis
+        retv, *_ = scp
+        retv = squeeze(retv, axis=m)
 
-    def evaluate(self, t):
-        t = self.callparam(t)
-        convolve = lambda t, c1, c2: (1-t)*c1 + t*c2
-        a = [
-                self.shape_in.reshape(self.control_points.shape[0],1),
-                self.control_points,
-                self.shape_out.reshape(self.control_points.shape[0],1)
-            ]
-        temp_control = concatenate(a, axis=1)
-        while temp_control.shape[1] > 1:
-            A = [
-                    convolve(t, temp_control[:, i], temp_control[:, i+1])
-                    for i
-                    in range(temp_control.shape[1] - 1)
-                ]
-            temp_control = stack(A, axis = 1)
-        return tuple(temp_control.T.reshape(self.control_points.shape[0]))
+        ## recur computation if there're more axes to compress
+        if ms:
+            ms = list(map(lambda x: x if x < m else x - 1, ms))
+            retv = Bezier(retv, ms, self.callparam).__call__(ts)
 
-    def _evaluate(self, t, arr):
-        pass
+        return retv
 
-    def split(self, t):
-        return [ Bezier( self.shape_in
-                       , self.shape_out
-                       , self.control_points
-                       , callparam=lambda nt: t*nt
-                       )
-               , Bezier( self.shape_in
-                       , self.shape_out
-                       , self.control_points
-                       , callparam=lambda nt: (1-t)*nt+t
-                       )
-               ]
+    def convolve(self, t, slice_one, slice_two):
+        return (1-t)*slice_one + t*slice_two
 ```
 
