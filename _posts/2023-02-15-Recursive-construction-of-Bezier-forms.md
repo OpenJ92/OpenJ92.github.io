@@ -120,7 +120,8 @@ class Bezier(VFF):
         scp = array_split(self.control_points, self.control_points.shape[m], m)
 
         ## condense sub-arrays with convolution 
-        while len(scp) > 1: scp = [self.convolve(t,p,c) for p, c in zip(scp, scp[1:])]
+        while len(scp) > 1: 
+            scp = [self.convolve(t,p,c) for p, c in zip(scp, scp[1:])]
 
         ## collect result of above computation and remove the condensed axis
         retv, *_ = scp
