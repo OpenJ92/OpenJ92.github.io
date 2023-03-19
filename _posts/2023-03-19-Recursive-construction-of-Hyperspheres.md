@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Recursive construction of Hyperspheres"
+title:  "Recursive construction of hyper-spheres"
 categories: jekyll update
 ---
 
@@ -24,6 +24,15 @@ categories: jekyll update
 </script>
 
 Here we describe an algorithm that enables one to sample hyper-spheres of any dimension. 
+
+$
+\xi_i = cos(\theta_i)\xi_{i-1} \triangledown sin(\theta_i)
+$ 
+
+
+$
+\xi_1 = 1
+$
 
 #### Implementation (Python)
 ```python
