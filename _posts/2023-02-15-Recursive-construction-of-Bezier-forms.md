@@ -95,7 +95,7 @@ We wish to repeat this map until one component remains. Which indeed resolves to
 
 $$
 \tag{2.0}
-\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta^{.i.}_{...} = \lambda_i t \overset{\|i\|}{\triangleright} \theta^{.i.}_{...} = C_{i} \theta^{.i.}_{...} = \theta^{..}_{..}
+\lambda_i t \triangleright \lambda_i t \triangleright \lambda_i t \triangleright \dots \lambda_i t \triangleright \theta^{.i.}\_{...} = \lambda\_i t \overset{\|i\|}{\triangleright} \theta^{.i.}\_{...} = C\_{i} \theta^{.i.}\_{...} = \theta^{..}\_{..}
 $$
 
 
