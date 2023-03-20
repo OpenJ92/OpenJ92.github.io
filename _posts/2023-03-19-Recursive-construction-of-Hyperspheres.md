@@ -26,7 +26,7 @@ categories: jekyll update
 Here we describe an algorithm that enables one to sample hyper-spheres of any dimension. 
 
 $$\begin{align}
-\xi_i & = cos(\theta_i)\xi_{i-1} \triangledown sin(\theta_i) \\
+\xi_i & = cos(\theta_i)\xi_{i-1} \triangledown^? sin(\theta_i) \\
 \xi_1 & = 1
 \end{align}$$
 
