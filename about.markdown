@@ -18,3 +18,5 @@ Let me draw you a picture. One in an inarticulable language. Don't contort your 
 Taken together, I feel incoherent. It's because I am. There is no coherent language. There's only projection and acceptance. There's never been truth. 
 
 So accept as you will. Project as you will. Together, let us transform cacophony into symphony. 
+
+
