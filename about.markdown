@@ -20,3 +20,5 @@ Taken together, I feel incoherent. It's because I am. There is no coherent langu
 So accept as you will. Project as you will. Together, let us transform cacophony into symphony. 
 
 
+
+
