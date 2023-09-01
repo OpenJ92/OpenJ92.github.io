@@ -20,5 +20,8 @@ Taken together, I feel incoherent. It's because I am. There is no coherent langu
 So accept as you will. Project as you will. Together, let us transform cacophony into symphony. 
 
 
+=======
 
+What language can utter precisely that word 'I'? Is it the one that rings in your ear now? The one projected. I suppose I could hope. I've been convinced on many occasions. Though, many is not all.
 
+I can't be sure, of course. So far as I can flex, so too can you. Perhaps more. Perhaps less. In any case, I'm sure we differ.
