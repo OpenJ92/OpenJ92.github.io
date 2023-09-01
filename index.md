@@ -6,7 +6,7 @@ layout: home
 ---
 
 <div class="navbar"> 
-	<a href="https://github.com/OpenJ92/gen">| Generative Art |</a>
+	<a href="https://github.com/OpenJ92/generative-art">| Generative Art |</a>
 	<a href="https://github.com/OpenJ92/Bezier-Networks">| Bezier-Networks |</a>
 	<a href="https://github.com/OpenJ92/database_image">| database-image |</a>
 </div>
